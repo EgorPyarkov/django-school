@@ -29,6 +29,9 @@ class Actor(models.Model):
         verbose_name = 'Актёры и режисёры'
         verbose_name_plural = 'Актёры и режисёры'
 
+    def get_absolute_url(self):
+        return reverse('actor_detail', kwargs={'slug': self.name})
+
 class Genre(models.Model):
     name = models.CharField('Имя', max_length=100)
     description = models.TextField('Описание')

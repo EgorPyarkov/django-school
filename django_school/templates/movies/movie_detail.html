@@ -22,42 +22,64 @@
                 <h5 class="editContent"></h5>
                 <ul>
                     <li style="list-style: none">
-                        <span><b>Год:</b> {{ movie.year }}</span></li>
-                    <li style="list-style: none">
-                        <span><b>Страна:</b> {{ movie.country }}</span>
+                        <span><b>Год:</b>
+                            {{ movie.year }}
+                        </span>
                     </li>
                     <li style="list-style: none">
-                        <span><b>Слоган:</b> {{ movie.tagline }}</span>
+                        <span><b>Страна:</b>
+                            {{ movie.country }}
+                        </span>
                     </li>
                     <li style="list-style: none">
-                                    <span><b>Режиссер:</b>
-                                        {% for director in movie.directors.all %}
-                                            {{ director.name }}
-                                        {% endfor %}
-                                    </span>
-                    </li>
-                    <li style="list-style: none"><span><b>Актеры:</b>
-
-                        {% for actor in movie.actors.all %}
-                            {{ actor.name }}
-                        {% endfor %}
-                                </span>
-                    </li>
-                    <li style="list-style: none"><span><b>Жанр:</b>
-                        {% for genre in movie.genres.all %}
-                            {{ genre.name }}
-                        {% endfor %}
-                                    </span>
+                        <span><b>Слоган:</b>
+                            {{ movie.tagline }}
+                        </span>
                     </li>
                     <li style="list-style: none">
-                        <span><b>Премьера в мире:</b> {{ movie.world_premiere }}</span>
+                        <span><b>Режиссер:</b>
+                            {% for director in movie.directors.all %}
+                                <a href="{{ director.get_absolute_url }}">
+                                    {{ director.name }}
+                                </a>
+                            {% endfor %}
+                        </span>
                     </li>
                     <li style="list-style: none">
-                        <span><b>Бюджет:</b> ${{ movie.budget }}</span></li>
+                        <span><b>Актеры:</b>
+                            {% for actor in movie.actors.all %}
+                                <a href="{{ actor.get_absolute_url }}">
+                                    {{ actor.name }}
+                                </a>
+                            {% endfor %}
+                        </span>
+                    </li>
                     <li style="list-style: none">
-                        <span><b>Сборы в США:</b> ${{ movie.fees_in_usa }}</span></li>
+                        <span><b>Жанр:</b>
+                            {% for genre in movie.genres.all %}
+                                {{ genre.name }}
+                            {% endfor %}
+                        </span>
+                    </li>
                     <li style="list-style: none">
-                        <span><b>Сборы в мире:</b> ${{ movie.fess_in_world }}</span>
+                        <span><b>Премьера в мире:</b>
+                            {{ movie.world_premiere }}
+                        </span>
+                    </li>
+                    <li style="list-style: none">
+                        <span><b>Бюджет:</b>
+                            ${{ movie.budget }}
+                        </span>
+                    </li>
+                    <li style="list-style: none">
+                        <span><b>Сборы в США:</b>
+                            ${{ movie.fees_in_usa }}
+                        </span>
+                    </li>
+                    <li style="list-style: none">
+                        <span><b>Сборы в мире:</b>
+                            ${{ movie.fees_in_word }}
+                        </span>
                     </li>
                     <li style="list-style: none">
                         <a href="#"><b>Рейтинг:</b>
@@ -77,46 +99,45 @@
                     </li>
                     <div class="share-desc">
                         <div class="share">
-                            <h4 class="editContent"
-                                style="outline: none; cursor: inherit;">
-                                Share:</h4>
+                            <h4 class="editContent" style="outline: none; cursor: inherit;">
+                                Share:
+                            </h4>
                             <ul class="w3layouts_social_list list-unstyled">
                                 <li>
                                     <a href="#" class="w3pvt_facebook editContent"
-                                       style="outline: none; cursor: inherit;">
-                                                <span class="fa fa-facebook-f"
-                                                      style="outline: none; cursor: inherit;"></span>
+                                        style="outline: none; cursor: inherit;">
+                                            <span class="fa fa-facebook-f"
+                                                style="outline: none; cursor: inherit;"></span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#" class="w3pvt_twitter editContent"
-                                       style="outline: none; cursor: inherit;">
-                                                <span class="fa fa-twitter"
-                                                      style="outline: none; cursor: inherit;"></span>
+                                        style="outline: none; cursor: inherit;">
+                                            <span class="fa fa-twitter"
+                                                style="outline: none; cursor: inherit;"></span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#" class="w3pvt_dribble editContent"
-                                       style="outline: none; cursor: inherit;">
-                                                <span class="fa fa-dribbble"
-                                                      style="outline: none; cursor: inherit;"></span>
+                                        style="outline: none; cursor: inherit;">
+                                            <span class="fa fa-dribbble"
+                                                style="outline: none; cursor: inherit;"></span>
                                     </a>
                                 </li>
                             </ul>
                         </div>
-                        <div class="clearfix"></div>
-                    </div>
+                    <div class="clearfix"></div>
+                </div>
             </div>
         </div>
         <div class="row sub-para-w3layouts mt-5">
-
             <h3 class="shop-sing editContent">
                 О фильме {{ movie.title }}
             </h3>
             <p>
                 {% for image in movie.movieshots_set.all %}
                     <img src="{{ image.image.url }}" class="img-movie-shots "
-                         alt="{{ image.description }}">
+                        alt="{{ image.description }}">
                 {% endfor %}
             </p>
             <p class="editContent" style="outline: none; cursor: inherit;">
@@ -139,10 +160,12 @@
                 <!-- contact form grid -->
                 <div class="contact-single">
                     <h3 class="editContent" style="outline: none; cursor: inherit;">
-                                    <span class="sub-tittle editContent"
-                                          style="outline: none; cursor: inherit;">{{ movie.reviews_set.count }} </span>Оставить
-                        отзыв</h3>
-                    <form action="{% url 'add_review' movie.id %}" method="post" class="mt-4" id="formReview">
+                        <span class="sub-tittle editContent"
+                            style="outline: none; cursor: inherit;">{{ movie.reviews_set.count }}</span>
+                        Оставить отзыв
+                    </h3>
+                    <form action="{% url 'add_review' movie.id %}"
+                             method="post" class="mt-4" id="formReview">
                         {% csrf_token %}
                         <input type="hidden" name="parent" id="contactparent" value="">
                         <div class="form-group editContent">
@@ -150,7 +173,7 @@
                                 Ваш комментарий *
                             </label>
                             <textarea class="form-control border" rows="5" name="text"
-                                      id="contactcomment" required=""></textarea>
+                                id="contactcomment" required=""></textarea>
                         </div>
                         <div class="d-sm-flex">
                             <div class="col-sm-6 form-group p-0 editContent">
@@ -187,29 +210,33 @@
                     <p class="mt-2 editContent">
                         {{ review.text }}
                     </p>
-                    <a href="#formReview" onclick="addReview('{{ review.name }}', '{{ review.id }}')">Ответить</a>
+                    <a href="#formReview" onclick="addReview('{{ review.name }}', '{{ review.id }}')">
+                        Ответить
+                    </a>
                     {% for rew in review.reviews_set.all %}
-                     <div class="media mt-5 editContent">
-                                <a class="pr-3" href="#">
-                                    <img src="{% static 'images/te2.jpg' %}" class="img-fluid " alt="image">
-                                </a>
-                             <div class="media-body">
-                                  <h5 class="mt-0 editContent">{{ rew.name }}</h5>
-                                  <p class="mt-2 editContent">
-                                      {{ rew.text }}</p>
-                             </div>
-                     </div>
+                        <div class="media mt-5 editContent">
+                            <a class="pr-3" href="#">
+                                <img src="{% static 'images/te2.jpg' %}" class="img-fluid " alt="image">
+                            </a>
+                            <div class="media-body">
+                                <h5 class="mt-0 editContent">
+                                    {{ rew.name }}
+                                </h5>
+                                <p class="mt-2 editContent">
+                                    {{ rew.text }}
+                                </p>
+                            </div>
+                        </div>
                     {% endfor %}
                 </div>
             </div>
         {% endfor %}
     </div>
-    </div>
-
-        <script>
-            function addReview(name, id) {
-                document.getElementById("contactparent").value = id;
-                document.getElementById("contactcomment").innerText =  `${name}, `
-            }
-        </script>
+</div>
+<script>
+   function addReview(name, id) {
+       document.getElementById("contactparent").value = id;
+           document.getElementById("contactcomment").innerText =  `${name}, `
+       }
+</script>
 {% endblock movie %}
