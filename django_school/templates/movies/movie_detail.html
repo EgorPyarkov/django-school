@@ -81,22 +81,22 @@
                             ${{ movie.fees_in_word }}
                         </span>
                     </li>
-                    <li style="list-style: none">
-                        <a href="#"><b>Рейтинг:</b>
-                            <span class="fa fa-star" aria-hidden="true"
-                                  style="outline: none; cursor: inherit;"></span>
-                            <span class="fa fa-star" aria-hidden="true"
-                                  style="outline: none; cursor: inherit;"></span>
-                            <span class="fa fa-star" aria-hidden="true"
-                                  style="outline: none; cursor: inherit;"></span>
-                            <span class="fa fa-star" aria-hidden="true"
-                                  style="outline: none; cursor: inherit;"></span>
-                            <span class="fa fa-star" aria-hidden="true"
-                                  style="outline: none; cursor: inherit;"></span>
-                            <span class="editContent"
-                                  style="outline: none; cursor: inherit;">5.0</span>
-                        </a>
+                    <li>
+                        <form action="{% url 'add_rating' %}" method="post" name="rating">
+                            <b>Рейтинг:</b>
+                            {% csrf_token %}
+                            <input type="hidden" value="{{ movie.id }}" name="movie">
+                            <button type="submit" class="mobile-button"><span class="rating">
+                                {% for k, v in star_form.fields.star.choices %}
+                                    <input id="rating{{ v }}" type="radio" name="star"
+                                           value="{{ k }}">
+                                    <label for="rating{{ v }}">{{ k }}</label>
+                                {% endfor %}
+                            </span></button>
+                            <span class="editContent">4.0</span>
+                        </form>
                     </li>
+                </ul>
                     <div class="share-desc">
                         <div class="share">
                             <h4 class="editContent" style="outline: none; cursor: inherit;">
