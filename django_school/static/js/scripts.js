@@ -1,15 +1,15 @@
-function ajaxSend(url, params) {
-    // Отправляем запрос
-    fetch(`${url}?${params}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-    })
-        .then(response => response.json())
-        .then(json => render(json))
-        .catch(error => console.error(error))
-}
+//function ajaxSend(url, params) {
+//    // Отправляем запрос
+//    fetch(`${url}?${params}`, {
+//        method: 'GET',
+//        headers: {
+//            'Content-Type': 'application/x-www-form-urlencoded',
+//        },
+//    })
+//        .then(response => response.json())
+//        .then(json => render(json))
+//        .catch(error => console.error(error))
+//}
 
 // Filter movies
 // const forms = document.querySelector('form[name=filter]');

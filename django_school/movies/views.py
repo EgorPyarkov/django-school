@@ -10,12 +10,14 @@ from .forms import *
 class GenreYear:
     """Жанры и года выхода фильмов"""
     def get_genres(self):
-        return Genre.objects.all()
+        return Genre.objects.all().distinct()
 
     def get_years(self):
-        return Movie.objects.filter(draft=False).values('year')
+        return Movie.objects.filter(draft=False).values('year').order_by('-year').distinct()
+
 class MoviesView(GenreYear, ListView):
     """"Список фильмов"""
+    paginate_by = 3
     model = Movie
     queryset = Movie.objects.filter(draft=False)
 
@@ -52,12 +54,19 @@ class ActorView(GenreYear, DetailView):
 
 class FilterMoviesView(GenreYear, ListView):
 
+    paginate_by = 3
     def get_queryset(self):
         queryset = Movie.objects.filter(
             Q(year__in=self.request.GET.getlist("year")) |
-            Q(genres__in=self.request.GET.getlist("genre")))
+            Q(genres__in=self.request.GET.getlist("genre"))
+        ).distinct()
         return queryset
 
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['year'] = ''.join([f'year={x}&' for x in self.request.GET.getlist("year")])
+        context['genre'] = ''.join([f'genre={x}&' for x in self.request.GET.getlist("genre")])
+        return context
 class AddStarRating(View):
     """Добавление рейтинга фильму"""
     def get_client_ip(self, request):
@@ -79,3 +88,16 @@ class AddStarRating(View):
             return redirect('home')
         else:
             return HttpResponse(status=400)
+
+
+class Search(ListView):
+    paginate_by = 2
+
+    def get_queryset(self):
+        return Movie.objects.filter(title__icontains=self.request.GET.get('q'))
+
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['q'] = f"q={self.request.GET.get('q')}&"
+        return context
