@@ -30,6 +30,7 @@ class MovieDetailView(GenreYear, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['star_form'] = RatingForm()
+        context["form"] = ReviewForm()
         return context
 
 class AddReview(View):
@@ -94,8 +95,7 @@ class Search(ListView):
     paginate_by = 2
 
     def get_queryset(self):
-        return Movie.objects.filter(title__icontains=self.request.GET.get('q'))
-
+        return Movie.objects.filter(title__iregex=self.request.GET.get('q'))
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
