@@ -117,15 +117,18 @@ class Rating(models.Model):
         verbose_name_plural = 'Рейтинги'
 
 class Reviews(models.Model):
+    """Отзывы"""
     email = models.EmailField()
-    name = models.CharField('Имя', max_length=100)
-    text = models.TextField('Сообщение', max_length=5000)
-    parent = models.ForeignKey('self', verbose_name='Родитель', on_delete=models.SET_NULL, null=True)
-    movie = models.ForeignKey(Movie, verbose_name='фильм', on_delete=models.CASCADE)
+    name = models.CharField("Имя", max_length=100)
+    text = models.TextField("Сообщение", max_length=5000)
+    parent = models.ForeignKey(
+        'self', verbose_name="Родитель", on_delete=models.SET_NULL, blank=True, null=True
+    )
+    movie = models.ForeignKey(Movie, verbose_name="фильм", on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.name} - {self.movie}'
+        return f"{self.name} - {self.movie}"
 
     class Meta:
-        verbose_name = 'Отзыв'
-        verbose_name_plural = 'Отзывы'
+        verbose_name = "Отзыв"
+        verbose_name_plural = "Отзывы"

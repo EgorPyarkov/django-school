@@ -80,13 +80,15 @@ class AddStarRating(View):
 
     def post(self, request):
         form = RatingForm(request.POST)
+        movie = Movie.objects.get(pk=request.POST.get('movie'))
         if form.is_valid():
             Rating.objects.update_or_create(
                 ip=self.get_client_ip(request),
                 movie_id=int(request.POST.get("movie")),
                 defaults={'star_id': int(request.POST.get("star"))}
             )
-            return redirect('home')
+            return redirect(movie.get_absolute_url())
+            # return redirect('home')
         else:
             return HttpResponse(status=400)
 
